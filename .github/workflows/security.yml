@@ -1,0 +1,34 @@
+name: Security Pipeline
+on: [push, pull_request]
+
+jobs:
+  secrets-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  semgrep:
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Semgrep (security gate)
+        run: semgrep scan --config auto --error .
+
+  trivy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Trivy filesystem scan (security gate)
+        run: |
+          docker run --rm -v "$PWD:/src" aquasec/trivy:latest fs \
+            --scanners vuln,misconfig,secret \
+            --severity HIGH,CRITICAL \
+            --exit-code 1 \
+            /src
