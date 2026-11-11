@@ -18,9 +18,15 @@ Fixing real scanner findings in a deliberately vulnerable Python app, taking a G
 | Semgrep | Insecure code and workflow patterns | 17 findings | 0 |
 | Trivy | Vulnerable packages and misconfigurations | 4 findings (1 critical, 3 high) | 0 |
 
-## Before: the gate blocks the build
+## Before: the gate blocks the build 
 
-## After: all checks pass
+<img width="736" height="598" alt="Screenshot 2026-11-11 124241" src="https://github.com/user-attachments/assets/da9afe99-0fa6-436c-895b-87275052ab2e" />
+
+
+## After: all checks pass 
+
+<img width="742" height="616" alt="image" src="https://github.com/user-attachments/assets/e8989df7-be64-4dd3-adda-2d34688d3fdd" />
+
 
 ## Fixes
 
